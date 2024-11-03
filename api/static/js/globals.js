@@ -1,7 +1,7 @@
 // script.js
-document.addEventListener("DOMContentLoaded", function () {
-  // alert('Script loaded!');
-});
+/*document.addEventListener("DOMContentLoaded", function () {
+  alert('Script loaded!');
+});*/
 
 const createNoteBtn = document.querySelector("#createNoteBtn");
 const createNoteModal = document.querySelector("#createNoteModal");
