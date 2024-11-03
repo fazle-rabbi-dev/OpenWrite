@@ -1,0 +1,63 @@
+{% extends './shared/layout.html' %} 
+
+{% block body %}
+
+<main class="min-h-screen max-container padding-container">
+  <h2
+    class="my-4 text-center text-2xl md:text-6xl font-extrabold mb-4 text-black/80"
+  >
+    Public note taking app
+  </h2>
+  <p class="bg-red-100 text-red-800 p-4 rounded-lg border border-red-300">
+    Note: All notes older than 48 hours will be deleted.
+  </p>
+
+  <!-- Search Bar -->
+  <div
+    class="mt-4 flex items-center space-x-2 border-[1px] border-gray-400 pl-2 h-12 rounded-lg"
+  >
+    <i data-lucide="search"></i>
+    <input
+      placeholder="Search note by title"
+      class="w-full bg-transparent outline-0"
+      type="text"
+      value=""
+    />
+  </div>
+
+  <!-- -->
+  <button
+    id="createNoteBtn"
+    class="btn-primary w-full my-4 md:text-xl"
+    type="button"
+  >
+    Create a new note
+  </button>
+
+  <!-- Display All Notes -->
+  <ul class="space-y-4">
+    {% for note in notes %}
+    <li class="bg-gray-100 rounded-lg p-3 shadow md:text-lg">
+      {% if "isProtected" in note %}
+      <p class="flex justify-end">
+        <button data-note-id="{{ note._id }}" id="viewNoteBtn" type="button">
+          <i data-lucide="eye"></i>
+        </button>
+      </p>
+      {% endif %}
+      
+      <p class="text-sm"><strong>Date:</strong> {{ note.date }}</p>
+      <p class="text-sm"><strong>Title:</strong> {{ note.title }}</p>
+      <hr />
+      <p class="my-2 break-all max-h-[200px] overflow-scroll">
+        {{ note.note }}
+      </p>
+    </li>
+    {% endfor %}
+  </ul>
+
+  {% include "./ui/CreateNoteModal.html" %}
+  {% include "./ui/ViewNoteModal.html" %}
+</main>
+
+{% endblock %}

@@ -1,0 +1,56 @@
+<div
+  id="createNoteModal"
+  class="hidden fixed inset-0 bg-black/70 backdrop-blur flex items-center justify-center px-6"
+>
+  <div class="bg-white rounded-lg p-4 w-full max-w-2xl">
+    <p class="flex justify-end">
+      <button
+        id="createNoteModalCloseBtn"
+        class="bg-gray-200 p-2 rounded-lg"
+        type="button"
+      >
+        <i data-lucide="x"></i>
+      </button>
+    </p>
+
+    <h2 class="text-2xl text-fuchsia-600">Create a new note</h2>
+
+    <form
+      class="mt-4 space-y-4 overscroll-auto"
+      action="/create-note"
+      method="post"
+      enctype="application/x-www-form-urlencoded"
+      accept-charset="utf-8"
+    >
+      <textarea
+        required=""
+        placeholder="Type note here"
+        class="input"
+        name="note"
+        rows="8"
+        cols="40"
+      ></textarea>
+      <input
+        required=""
+        placeholder="Title to identify note"
+        class="input h-12"
+        type="text"
+        name="title"
+        value=""
+      />
+      <input
+        placeholder="Password to protect note"
+        class="input h-12"
+        type="password"
+        name="password"
+        value=""
+      />
+      <button
+        class="btn-primary my-3 w-full"
+        type="submit"
+      >
+        Save
+      </button>
+    </form>
+  </div>
+</div>

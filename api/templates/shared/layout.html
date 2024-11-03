@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta name="theme-color" content="#f8f8f8">
+  <meta name="author" content="fazle-rabbi">
+  <title>OpenWrite - Public note taking web app</title>
+  <meta name="keywords" content="OpenWrite, note app, public note, public note taking, free note app,fazle-rabbi-dev,fazle rabbi dev">
+  <meta name="description" content="A public note-taking app that allows users to create notes without logging in. Enjoy easy access and quick note taking feature.">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/globals.css') }}">
+</head>
+<body>
+  
+  {% include "./shared/navbar.html" %}
+  
+  {% block body %}{% endblock %}
+  
+  {% include "./shared/footer.html" %}
+  
+  <script src="{{ url_for('static', filename='js/globals.js') }}"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    lucide.createIcons();
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+  <script>eruda.init();</script>
+</body>
+</html>  

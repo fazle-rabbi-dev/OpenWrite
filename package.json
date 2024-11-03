@@ -1,0 +1,16 @@
+{
+    "name": "OpenWrite",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "private": true,
+    "scripts": {
+        "tailwindcss:build": "npx tailwindcss -i ./api/static/css/input.css -o ./api/static/css/globals.css --watch"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "tailwindcss": "^3.4.1"
+    }
+}
