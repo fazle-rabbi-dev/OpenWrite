@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Exo&family=Inter:wght@400;500;600;700;800&family=Josefin+Sans:wght@400;500;600;700&family=Lora&family=Open+Sans&family=Patrick+Hand&family=Poppins&family=Quicksand&family=Roboto&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+font-family: "Lora", serif;
+font-family: "Roboto", sans-serif;
+font-family: "Quicksand", sans-serif;
+font-family: "Poppins", sans-serif;
+font-family: "Patrick Hand", cursive;
+font-family: "Open Sans", sans-serif;
+font-family: "Lora", serif;
+font-family: "Josefin Sans", sans-serif;
+font-family: "Inter", sans-serif;
+font-family: "Exo", sans-serif;
+*/
+
+body{
+  font-family: "Inter", sans-serif;
+}
+
+@layer utilities{
+  .max-container{
+    @apply mx-auto md:max-w-4xl
+  }
+  
+  .padding-container{
+    @apply px-4 py-2 md:px-8 md:py-6
+  }
+  
+  .btn-primary {
+    @apply h-12 px-4 rounded-lg bg-fuchsia-600 text-white hover:bg-fuchsia-700 ;
+  } 
+  
+  .input {
+    @apply w-full px-2 bg-transparent rounded-lg outline-0 border-[1px] border-gray-400;
+  }
+}
