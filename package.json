@@ -5,7 +5,8 @@
     "main": "index.js",
     "private": true,
     "scripts": {
-        "tailwindcss:build": "npx tailwindcss -i ./api/static/css/input.css -o ./api/static/css/globals.css --watch"
+        "dev": "python api/index.py",
+        "tw:build": "npx tailwindcss -i ./api/static/css/input.css -o ./api/static/css/globals.css --watch"
     },
     "keywords": [],
     "author": "",

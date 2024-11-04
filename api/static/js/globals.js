@@ -1,85 +1,68 @@
-// script.js
-/*document.addEventListener("DOMContentLoaded", function () {
-  alert('Script loaded!');
-});*/
+// Select DOM elements
+const elements = {
+  createNoteBtn: document.querySelector("#createNoteBtn"),
+  createNoteModal: document.querySelector("#createNoteModal"),
+  createNoteModalCloseBtn: document.querySelector("#createNoteModalCloseBtn"),
+  viewNoteModal: document.querySelector("#viewNoteModal"),
+  viewNoteModalCloseBtn: document.querySelector("#viewNoteModalCloseBtn"),
+  getNoteBtn: document.querySelector("#getNoteBtn"),
+  notePasswordInput: document.querySelector("#notePasswordInput"),
+  displayNote: document.querySelector("#displayNote"),
+  displayToast: document.querySelector("#displayToast")
+};
 
-const createNoteBtn = document.querySelector("#createNoteBtn");
-const createNoteModal = document.querySelector("#createNoteModal");
-const createNoteModalCloseBtn = document.querySelector(
-  "#createNoteModalCloseBtn"
-);
+// Functions to show/hide modals
+const toggleModal = (modal, show) => {
+  modal.classList.toggle("hidden", !show);
+};
 
-const viewNoteBtn = document.querySelector("#viewNoteBtn");
-const viewNoteModal = document.querySelector("#viewNoteModal");
-const viewNoteModalCloseBtn = document.querySelector("#viewNoteModalCloseBtn");
+// Event listeners for modal controls
+elements.createNoteBtn.addEventListener("click", () => toggleModal(elements.createNoteModal, true));
+elements.createNoteModalCloseBtn.addEventListener("click", () => toggleModal(elements.createNoteModal, false));
+elements.viewNoteModalCloseBtn.addEventListener("click", () => toggleModal(elements.viewNoteModal, false));
 
-const getNoteBtn = document.querySelector("#getNoteBtn");
-const notePasswordInput = document.querySelector("#notePasswordInput");
-
-const displayNote = document.querySelector("#displayNote");
-const displayToast = document.querySelector("#displayToast");
-
-createNoteBtn.addEventListener("click", function () {
-  createNoteModal.classList.remove("hidden");
-});
-
-createNoteModalCloseBtn.addEventListener("click", function () {
-  createNoteModal.classList.add("hidden");
-});
-
-/*viewNoteBtn.addEventListener("click", function(){
-  viewNoteModal.classList.remove("hidden");
-});*/
-
-viewNoteModalCloseBtn.addEventListener("click", function () {
-  viewNoteModal.classList.add("hidden");
-});
-
+// ╭────────────────────────────────────────────────────────╮
+// │      Get note ID when the user clicks on the "View Note" icon
+// ╰────────────────────────────────────────────────────────╯
 let noteId;
-document.addEventListener("DOMContentLoaded", function () {
-  // Select all "view" buttons
+
+document.addEventListener("DOMContentLoaded", () => {
   const viewNoteButtons = document.querySelectorAll("#viewNoteBtn");
 
-  // Add a click event listener to each button
   viewNoteButtons.forEach(button => {
     button.addEventListener("click", function () {
-      viewNoteModal.classList.remove("hidden");
-
-      // Retrieve the note ID from the data attribute
+      toggleModal(elements.viewNoteModal, true);
       noteId = this.getAttribute("data-note-id");
-
-      // Now you can use noteId as needed, e.g., log it or make an API call
-      console.log("Note ID:", noteId);
     });
   });
 });
 
-getNoteBtn.addEventListener("click", async function () {
-  // Make api call to get the note
-  if(notePasswordInput.value.trim() === "") {
-    return alert("Oops! enter your password.")
-  }
+// ╭────────────────────────────────────────────────────────╮
+// │      Get password-protected note with the provided password
+// ╰────────────────────────────────────────────────────────╯
+elements.getNoteBtn.addEventListener("click", async () => {
+  const password = elements.notePasswordInput.value.trim();
   
+  if (!password) {
+    return alert("Oops! Please enter your password.");
+  }
+
   try {
     const response = await fetch(`/notes/${noteId}`, {
       method: "POST",
-      body: JSON.stringify({
-        password: notePasswordInput.value
-      }),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8"
-      }
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ password })
     });
-    const jsonData = await response.json();
-    if(jsonData.success) {
-      displayToast.textContent = "🔓 Note unlocked successfully.";
-      displayNote.textContent = jsonData.data.note;
+
+    const data = await response.json();
+
+    if (data.success) {
+      elements.displayToast.textContent = "🔓 Note unlocked successfully.";
+      elements.displayNote.textContent = data.data.note_content;
     } else {
-      displayToast.textContent = jsonData.error;
+      elements.displayToast.textContent = data.error;
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 });
-
-

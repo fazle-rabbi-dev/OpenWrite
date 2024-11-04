@@ -1,0 +1,1 @@
+Static folder in root directory is required for vercel deployment

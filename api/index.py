@@ -10,7 +10,7 @@ from datetime import datetime,timedelta
 
 app = Flask(__name__)
 
-# Load environment variables from .env file
+# Load environment variables
 load_dotenv()
 database_uri = os.getenv("DATABASE_URI")
 
@@ -22,17 +22,17 @@ NOTES = db['notes']
 @app.route('/')
 def index():
     notes = list(NOTES.find({}))
-    # Format date for each note
+    # Filter note before sending to client 
     for note in notes:
         if "password" in note and note["password"] != "":
-          print("password exists")
           # Remove password field from each note
           del note["password"]
-          # mark as "Protected"
-          note["note"] = "🔒 Protected Note. Use password to view this note."
-          # Add a new field to mark this note as protected 
+          # Mark "note_content" as "Protected note"
+          note["note_content"] = "🔒 Protected Note. Use password to view this note."
+          # Add a new field to identify note is protected 
           note["isProtected"] = True
-          
+        
+        # Format date for each note
         # Ensure `date` field exists, then format it
         if "date" in note and isinstance(note["date"], datetime):
             note["date"] = note["date"].strftime("%d %b, %y at %I:%M %p")
@@ -42,9 +42,9 @@ def index():
 
 # Create new note
 @app.route('/create-note', methods=['POST'])
-def add_note():
+def create_note():
     form = request.form
-    note_content = form.get("note")
+    note_content = form.get("note_content")
     note_title = form.get("title")
     password = form.get("password")
     
@@ -56,7 +56,7 @@ def add_note():
 
     # Define the note dictionary correctly with keys and add current date
     note = {
-        "note": note_content,
+        "note_content": note_content,
         "title": note_title,
         "password": password or "",
         "date": datetime.now()
@@ -70,18 +70,15 @@ def add_note():
 # Get note by id with correct password
 @app.route('/notes/<note_id>', methods=['POST'])
 def get_note_by_id(note_id):
-    data = request.get_json()  # Get JSON data from request
+    data = request.get_json()
     password = data.get("password")
     
     # Query the database for a note that matches the ID and password
     note = NOTES.find_one({"_id": ObjectId(note_id), "password": password}, {"_id": 0, "password": 0})
-    # note = NOTES.find_one({"_id": ObjectId(note_id) }, {"_id": 0})
     
     if note:
-        # If note is found, return it
         return jsonify({ "success": True, "data": note }), 200
     else:
-        # If no match is found, return an error message
         return jsonify({ "success": False, "error": "Note not found or password is incorrect"}), 404
 
 if __name__ == '__main__':

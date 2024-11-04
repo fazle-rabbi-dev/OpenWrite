@@ -1,12 +1,13 @@
 <div
   id="viewNoteModal"
-  class="hidden fixed inset-0 bg-black/70 backdrop-blur flex items-center justify-center px-6"
+  class="hidden fixed inset-0 flex items-center justify-center px-6 bg-black/70 backdrop-blur"
 >
-  <div class="bg-white rounded-lg p-4 w-full max-w-2xl">
+  <!-- Modal Container -->
+  <div class="w-full max-w-2xl p-4 bg-white rounded-lg">
     <p class="flex justify-end">
       <button
         id="viewNoteModalCloseBtn"
-        class="bg-gray-200 p-2 rounded-lg"
+        class="p-2 bg-gray-200 rounded-lg"
         type="button"
       >
         <i data-lucide="x"></i>
@@ -14,19 +15,35 @@
     </p>
 
     <h2 class="text-2xl text-fuchsia-600">View protected note</h2>
-    
-    
+
     <div class="">
-      <input id="notePasswordInput" required="" placeholder="Enter password" class="mt-2 input h-12" type="password" name="password" value="" />
-      <button id="getNoteBtn" class="w-full mt-2 btn-primary" type="button">
-        View Note
+      <input
+        id="notePasswordInput"
+        required
+        placeholder="Enter password"
+        class="mt-2 input h-12"
+        type="password"
+        name="password"
+        value=""
+      />
+      <button
+        id="getNoteBtn"
+        class="btn-primary w-full mt-2"
+        type="button"
+      >
+        Get Note
       </button>
     </div>
-    
-    <div class="mt-4 border-[.6px] border-gray-300 p-3 rounded-lg max-h-[200px] overflow-auto">
+
+    <div
+      class="max-h-[200px] mt-4 p-3 border-[.6px] border-gray-300 rounded-lg overflow-auto"
+    >
       <h3 id="displayToast"></h3>
-      <p class="mt-4 text-fuchsia-800 text-lg tracking-wide break-all leading-6" id="displayNote">
-        
+      <p
+        class="mt-4 text-fuchsia-800 text-lg tracking-wide break-all leading-6"
+        id="displayNote"
+      >
+        <!-- Note Will Be Appear Here -->
       </p>
     </div>
   </div>
